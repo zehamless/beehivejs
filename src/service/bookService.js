@@ -4,7 +4,7 @@ const getAllBooks = async (page = 1, limit = 10) => {
     try {
         const skip = (page - 1) * limit;
         const [books, total] = await Promise.all([
-            Book.find().skip(skip).limit(limit),
+            Book.find().skip(skip).limit(limit).populate('authorId'),
             Book.countDocuments()
         ]);
         return {
@@ -24,7 +24,7 @@ const getAllBooks = async (page = 1, limit = 10) => {
 
 const getBookById = async (id) => {
     try {
-        const book = await Book.findById(id);
+        const book = await Book.findById(id).populate('authorId');
         if (!book) return {status: 404, message: 'Book not found'};
         return {status: 200, data: book};
     } catch (error) {
