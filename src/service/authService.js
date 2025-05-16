@@ -10,7 +10,6 @@ const getUser = async (email, password) => {
         const {password: _, ...userData} = user.toObject();
         return {status: 200, data: userData};
     } catch (error) {
-        console.error(error);
         return {status: 500, message: 'Error fetching user'};
     }
 };
@@ -24,7 +23,6 @@ const createUser = async (name, email, password) => {
         const {password: _, ...userData} = newUser.toObject();
         return {status: 201, message: 'User created successfully', data: userData};
     } catch (error) {
-        console.error(error);
         return {status: 500, message: 'Error creating user'};
     }
 };
