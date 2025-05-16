@@ -7,15 +7,16 @@ const {
     editBook,
     removeBook
 } = require("../controller/bookController");
+const {validateCreateBook, validateUpdateBook} = require("../validation/validate");
 
 const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post("/", addBook);
+router.post("/", validateCreateBook, addBook);
 router.get("/", getBooks);
 router.get("/:id", getBook);
-router.put("/:id", editBook);
+router.put("/:id", validateUpdateBook, editBook);
 router.delete("/:id", removeBook);
 
 module.exports = router;

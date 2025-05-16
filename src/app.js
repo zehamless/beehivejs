@@ -1,9 +1,11 @@
 const express = require('express');
-const authRoute = require('../route/authRoute');
-const authorRoute = require('../route/authorRoute');
-const bookRoute = require('../route/bookRoute');
+const authRoute = require('./route/authRoute');
+const authorRoute = require('./route/authorRoute');
+const bookRoute = require('./route/bookRoute');
+const helmet = require("helmet");
 const app = express();
 
+app.use(helmet())
 app.use(
     express.urlencoded({
         extended: true,
@@ -15,7 +17,6 @@ app.use(express.json());
 app.use('/api', authRoute);
 app.use('/api/authors', authorRoute);
 app.use('/api/books', bookRoute);
-
 
 
 module.exports = app;

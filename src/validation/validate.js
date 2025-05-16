@@ -19,7 +19,7 @@ const validationSchema = {
     }),
     createBook: Joi.object({
         title: Joi.string().required(),
-        year: Joi.number().integer().min(1900).max(new Date().getFullYear()).required(),
+        year: Joi.number().integer().min(1000).max(new Date().getFullYear()).required(),
         authorId: Joi.string().optional(),
     }),
     updateBook: Joi.object({

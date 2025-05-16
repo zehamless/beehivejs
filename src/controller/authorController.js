@@ -15,7 +15,6 @@ const getAuthors = async (req, res) => {
 
 const getAuthor = async (req, res) => {
     const {id} = req.params;
-    console.log(id);
     const result = await getAuthorById(id);
     res.status(result.status).json(result);
 };
