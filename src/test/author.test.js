@@ -70,12 +70,14 @@ describe('Author API', () => {
         expect(res.body.message).toMatch(/deleted/i);
     });
     it('should paginate authors', async () => {
-        for (let i = 0; i < 12; i++) {
-            await request(app)
-                .post('/api/authors')
-                .set('Authorization', `Bearer ${token}`)
-                .send({name: `Author ${i}`});
-        }
+        await Promise.all(
+            Array.from({length: 12}, (_, i) =>
+                request(app)
+                    .post('/api/authors')
+                    .set('Authorization', `Bearer ${token}`)
+                    .send({name: `Author ${i}`})
+            )
+        );
         const res = await request(app)
             .get('/api/authors?page=2&limit=5')
             .set('Authorization', `Bearer ${token}`);
@@ -90,5 +92,13 @@ describe('Author API', () => {
             expect(res.body.data.page).toBe(2);
             expect(res.body.data.limit).toBe(5);
         }
+    });
+    it('should failed validation', async () => {
+        const res = await request(app)
+            .post('/api/authors')
+            .set('Authorization', `Bearer ${token}`)
+            .send({name: ''});
+        expect(res.statusCode).toBe(400);
+        expect(res.body.error).toMatch(/name.*empty/i);
     });
 });
