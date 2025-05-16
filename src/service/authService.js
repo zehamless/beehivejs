@@ -45,7 +45,6 @@ const verifyToken = (token) => {
         const decoded = jwt.verify(token, secret);
         return {status: 200, data: decoded};
     } catch (error) {
-        console.error(error);
         return {status: 401, message: 'Invalid token'};
     }
 }
