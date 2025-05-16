@@ -28,5 +28,5 @@ userSchema.methods.isValidPassword = function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model('User', userSchema,'user');
+const User = mongoose.model('User', userSchema, 'user');
 module.exports = User;
